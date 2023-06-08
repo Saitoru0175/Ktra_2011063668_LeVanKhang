@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>My List</title>
+    <th:block th:replace="layout :: link-css"></th:block>
+</head>
+<body>
+<th:block th:replace="layout :: header"></th:block>
+<div class="container">
+    <h1><strong>Nhân Viên</strong></h1>
+    <a th:href="@{/nhanviens/add}" class="btn btn-outline-success">Thêm</a>
+    <table class="table">
+        <tr>
+            <th>Mã Nhân Viên</th>
+            <th>Tên Nhân Viên</th>
+            <th>Giới Tính</th>
+            <th>Nơi Sinh</th>
+            <th>Tên Phòng</th>
+            <th>Lương</th>
+            <th>Action</th>
+
+        </tr>
+        <tr th:each="nhanvien : ${nhanviens}">
+            <td th:text="${nhanvien.ma_nv}"></td>
+            <td th:text="${nhanvien.ten_nv}"></td>
+            <td>
+                <img th:src="@{${nhanvien.phai} == 'Nam' ? '/img/nam.jpg' : '/img/nu.jpg'}" alt="Hình ảnh giới tính" style="width: 40px; height: 40px;" >
+            </td>
+            <td th:text="${nhanvien.noi_sinh}"></td>
+            <td th:text="${nhanvien.phongban.ten_phong}"></td>
+            <td th:text="${nhanvien.luong}"></td>
+            <td>
+                <a th:href="@{/nhanviens/edit/{ma_nv}(ma_nv=${nhanvien.ma_nv})}" class="btn btn-outline-primary" >Cập Nhật</a>
+                <a th:href="@{/nhanviens/delete/{ma_nv}(ma_nv=${nhanvien.ma_nv})}" onclick="return confirm('Are you sure?')" class="btn btn-outline-danger" >Xóa</a>
+            </td>
+        </tr>
+    </table>
+</div>
+<th:block th:replace="layout :: footer"></th:block>
+</body>
+</html>
